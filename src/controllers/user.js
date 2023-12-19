@@ -186,7 +186,7 @@ export class UserController {
       } else {
         return res.status(401).json({
           error: 'Impossível autenticar',
-          message: 'Credenciais inválidas',
+          message: 'Senha incorreta.',
         });
       }
     } catch (error) {
