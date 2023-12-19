@@ -147,7 +147,7 @@ export class UserController {
       if (!user) {
         return res.status(401).json({
           error: 'Usuário inexistente',
-          message: 'Usuário inexistente',
+          message: 'Usuário inexistente. Por favor, verifique o CPF inserido.',
         });
       }
 
