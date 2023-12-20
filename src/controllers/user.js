@@ -348,13 +348,11 @@ export class UserController {
   store = async (req, res) => {
     try {
       const { fullName, cpf, email, password, idUnit, idRole } = req.body;
-      
-      const currentUser = await this.userService.getUserByCpf(cpf)
-      
-      if(currentUser){
-        return res
-        .status(409)
-        .json({ message: 'CPF já cadastrado.' })
+
+      const currentUser = await this.userService.getUserByCpf(cpf);
+
+      if (currentUser) {
+        return res.status(409).json({ message: 'CPF já cadastrado.' });
       }
       const hashedPassword = await hash(password, passHashing);
 
