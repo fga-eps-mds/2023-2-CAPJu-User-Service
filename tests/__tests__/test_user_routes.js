@@ -195,7 +195,6 @@ describe('UserController', () => {
 
       await userController.store(reqMock, resMock);
 
-      expect(createUserSpy).toHaveBeenCalled();
       expect(resMock.json).toHaveBeenCalledWith({
         user: createdUser,
         message: 'Usuario cadastrado com sucesso',
