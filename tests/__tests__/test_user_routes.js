@@ -69,7 +69,7 @@ describe('UserController', () => {
       expect(resMock.status).toHaveBeenCalledWith(401);
       expect(resMock.json).toHaveBeenCalledWith({
         error: 'Usuário inexistente',
-        message: 'Usuário inexistente',
+        message: 'Usuário inexistente. Por favor, verifique o CPF inserido.',
       });
     });
 
@@ -140,7 +140,7 @@ describe('UserController', () => {
       expect(resMock.status).toHaveBeenCalledWith(401);
       expect(resMock.json).toHaveBeenCalledWith({
         error: 'Impossível autenticar',
-        message: 'Credenciais inválidas',
+        message: 'Senha incorreta.',
       });
     });
 
