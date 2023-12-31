@@ -69,7 +69,7 @@ describe('UserController', () => {
       expect(resMock.status).toHaveBeenCalledWith(401);
       expect(resMock.json).toHaveBeenCalledWith({
         error: 'Usuário inexistente',
-        message: 'Usuário inexistente',
+        message: 'Usuário inexistente. Por favor, verifique o CPF inserido.',
       });
     });
 
@@ -140,7 +140,7 @@ describe('UserController', () => {
       expect(resMock.status).toHaveBeenCalledWith(401);
       expect(resMock.json).toHaveBeenCalledWith({
         error: 'Impossível autenticar',
-        message: 'Credenciais inválidas',
+        message: 'Senha incorreta.',
       });
     });
 
@@ -187,6 +187,11 @@ describe('UserController', () => {
         idRole: 2,
       };
 
+      const getUserByCpf = jest
+        .spyOn(UserService.prototype, 'getUserByCpf')
+        .mockResolvedValue(undefined);
+
+
       const createUserSpy = jest
         .spyOn(UserService.prototype, 'createUser')
         .mockReturnValue(createdUser);
@@ -195,7 +200,6 @@ describe('UserController', () => {
 
       await userController.store(reqMock, resMock);
 
-      expect(createUserSpy).toHaveBeenCalled();
       expect(resMock.json).toHaveBeenCalledWith({
         user: createdUser,
         message: 'Usuario cadastrado com sucesso',

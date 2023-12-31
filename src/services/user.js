@@ -211,7 +211,7 @@ class UserService {
     if (!user) {
       throw {
         status: 404,
-        message: 'Usuário não encontrado.',
+        message: 'E-mail não encontrado. Por favor, insira um e-mail válido.',
       };
     }
 

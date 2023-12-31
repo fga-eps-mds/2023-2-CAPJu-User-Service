@@ -148,7 +148,7 @@ export class UserController {
       if (!user) {
         return res.status(401).json({
           error: 'Usuário inexistente',
-          message: 'Usuário inexistente',
+          message: 'Usuário inexistente. Por favor, verifique o CPF inserido.',
         });
       }
 
@@ -187,7 +187,7 @@ export class UserController {
       } else {
         return res.status(401).json({
           error: 'Impossível autenticar',
-          message: 'Credenciais inválidas',
+          message: 'Senha incorreta.',
         });
       }
     } catch (error) {
@@ -349,6 +349,11 @@ export class UserController {
     try {
       const { fullName, cpf, email, password, idUnit, idRole } = req.body;
 
+      const currentUser = await this.userService.getUserByCpf(cpf);
+
+      if (currentUser) {
+        return res.status(409).json({ message: 'CPF já cadastrado.' });
+      }
       const hashedPassword = await hash(password, passHashing);
 
       const data = {
