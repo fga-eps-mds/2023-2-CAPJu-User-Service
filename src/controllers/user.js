@@ -197,7 +197,7 @@ export class UserController {
 
   logoutUser = async (req, res) => {
     try {
-      const tokenResult = await this.verifyToken(req);
+      const tokenResult = await this.verifyPosibleExpiredToken(req);
       if (tokenResult.error) {
         return res.status(401).json({ message: tokenResult.message });
       }
@@ -221,7 +221,6 @@ export class UserController {
 
       return res.json({ message: 'Logout realizado com sucesso' }).status(200);
     } catch (error) {
-      console.log(error);
       return res
         .status(500)
         .json({ error, message: 'Erro ao realizar logout' });
@@ -270,7 +269,7 @@ export class UserController {
 
   logoutExpiredSession = async (req, res) => {
     try {
-      const tokenResult = await this.verifyToken(req);
+      const tokenResult = await this.verifyPosibleExpiredToken(req);
       if (tokenResult.error) {
         return res.status(401).json({ message: tokenResult.message });
       }
@@ -317,7 +316,6 @@ export class UserController {
         .json({ message: 'Usuário deslogado com sucesso!' })
         .status(200);
     } catch (error) {
-      console.log(error);
       return res
         .status(500)
         .json({ error, message: 'Erro ao realizar logout' });
@@ -326,7 +324,7 @@ export class UserController {
 
   getSessionStatus = async (req, res) => {
     try {
-      const tokenResult = await this.verifyToken(req);
+      const tokenResult = await this.verifyPosibleExpiredToken(req);
       if (tokenResult.error) {
         return res.status(401).json({ message: tokenResult.message });
       }
@@ -556,7 +554,7 @@ export class UserController {
     }
   };
 
-  verifyToken = async req => {
+  verifyPosibleExpiredToken = async req => {
     const authorizationHeader = req.headers.authorization;
 
     if (!authorizationHeader || !authorizationHeader.startsWith('Bearer')) {
@@ -572,7 +570,7 @@ export class UserController {
       if (error.name !== 'TokenExpiredError') {
         return { error: true, message: 'Autenticação falhou!' };
       }
-      return { error: true, tokenExpired: true };
+      return { error: false };
     }
   };
 }
